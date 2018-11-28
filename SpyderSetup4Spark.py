@@ -39,10 +39,14 @@ sc= SparkContext('local',conf=conf)
 
 #Test to make sure everything works
 
-lines= sc.textFile("creditcard.csv")
-lines.info()
+lines= sc.read.csv("creditcard.csv")
+lines.first()
 
-
-
+from pyspark.sql import SparkSession
+spark = SparkSession.builder \
+        .master('local') \
+        .appName('Spark-1st-Attempt') \
+        .getOrCreate()
+df = spark.read.format('csv').option('header','true').option('mode','DROPMALFORMED').load('creditcard.csv')
 
 
