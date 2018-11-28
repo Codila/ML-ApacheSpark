@@ -42,11 +42,14 @@ sc= SparkContext('local',conf=conf)
 lines= sc.read.csv("creditcard.csv")
 lines.first()
 
+## Making a SQL query with Spark
 from pyspark.sql import SparkSession
 spark = SparkSession.builder \
         .master('local') \
         .appName('Spark-1st-Attempt') \
         .getOrCreate()
+#df creation
 df = spark.read.format('csv').option('header','true').option('mode','DROPMALFORMED').load('creditcard.csv')
+print(df.count())
 
 
